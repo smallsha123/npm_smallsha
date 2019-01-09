@@ -35,4 +35,5 @@ input,select,option{vertical-align:middle;border-radius:0px;-moz-appearance:none
 
 input[type="text"],input[type="button"],input[type="submit"],input[type="reset"]{-webkit-appearance: none;appearance: none;border-radius: 0;outline: none;}  
 
-.overflow {overflow:hidden; }  
+.overflow {overflow:hidden; }
+/*smallsha*/
