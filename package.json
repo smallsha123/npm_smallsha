@@ -14,9 +14,6 @@
     "ak_smallsha"
   ],
   "author": "ak_smallsha",
-  "license": "ISC",
-  "dependencies": {
-    "flexible.js": "^2.0.19",
-    "normalize.css": "^8.0.1"
-  }
+  "license": "ISC"
+  
 }
