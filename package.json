@@ -1,6 +1,6 @@
 {
   "name": "nak_smallsha",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "smallsha first bag",
   "main": "index.js",
   "scripts": {
