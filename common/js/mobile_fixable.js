@@ -14,3 +14,8 @@
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
+
+
+// <body style="display: none;"> 
+// 
+// $("body").css("display","block")    // rem 错乱问题
