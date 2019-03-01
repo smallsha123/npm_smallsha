@@ -1,0 +1,75 @@
+<?php
+    //会员族谱
+    public function member_org(){
+        $member_id = input('param.member_id',0);
+        $users = Db::name('store_member a')
+            ->field('a.id,a.nickname,a.phone,a.account_money,b.title,a.create_at')
+            ->join('sys_level b',"a.member_level = b.id")
+            ->where(['a.first_leader'=>$member_id])->find();
+        $this->assign('user_org',$users);
+		 $this->assign('datascource',json_encode($this->getTreeMember($member_id)));
+        return view();
+    }
+
+
+    public function getTreeMember($member_id =0){
+        $list = [];
+        $users =    Db::name('store_member a')
+            ->field('a.id,a.nickname,a.phone,a.account_money,b.title,a.create_at')
+            ->join('sys_level b',"a.member_level = b.id")
+            ->where(['a.first_leader'=>$member_id])->select();
+        if (!empty($users)) {
+            foreach ($users as $k => &$v) {
+                $v['children'] = $this->getTreeMember($v['id']);
+                $list[] = $v;
+            }
+        }
+        return $list;
+    }
+
+
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+<script>
+	 (function($){
+        $(function() {
+            var datascource = {
+                'id': '{$user_org.id|default='0'}',
+                'title': '{$user_org.title|default='暂无级别'}',
+                'nickname': '{$user_org.nickname|default='暂无名称'}',
+                'phone': '{$user_org.phone|default='暂无手机号'}',
+                'account_money': '{$user_org.account_money|default='0'}',
+
+                'children': <?php echo $datascource;?>
+            };
+
+            $('#chart-container').orgchart({
+                'data': datascource,
+                'nodeContent': 'phone',
+                'nodeID': 'id',
+                'exportButton': true,
+                'exportFilename': 'MyOrgChart',
+                'createNode': function($node, data) {
+                    var secondMenuIcon = $('<i>', {
+                        'class': 'fa fa-info-circle second-menu-icon',
+                        click: function() {
+                            $(this).siblings('.second-menu').toggle();
+                        }
+                    });
+                    var secondMenu = '<div class="second-menu"><div>级别:'+data.title+'</div><div>账户总额:'+data.account_money+'</div></div>';
+                    $node.append(secondMenuIcon).append(secondMenu);
+                }
+            });
+
+        });
+
+    })(jQuery);
+</script>

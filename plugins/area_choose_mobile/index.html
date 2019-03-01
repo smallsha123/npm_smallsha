@@ -96,3 +96,23 @@
 </body>
 
 </html>
+
+<?php 
+  private function GetTree( $arr, $pid )
+    {
+        $tree = [];
+        foreach ($arr as $key => $val) {
+            if ($val['area_parent_id'] == $pid) {
+                $data = $this->GetTree($arr, $val['id']);
+                if(!empty($data)){
+                    $val['child'] =$data;
+                }
+                $tree[] = $val;
+            }
+        }
+        return $tree;
+    }
+
+
+
+?>
